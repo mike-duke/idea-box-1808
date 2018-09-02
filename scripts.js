@@ -14,11 +14,12 @@ function addCard() {
   var newCard = `
     <article class="new-card">
       <h2>${card.title}</h2>
-      <button>Delete</button>
+      <button class="delete-button"></button>
       <p>${card.body}</p>
-      <button>Up</button>
-      <button>Down</button>
-      <h4>Quality: ${card.quality}</h4>`
+      <button class="upvote-button"></button>
+      <button class="downvote-button"></button>
+      <h4>Quality: ${card.quality}</h4>
+      <hr>`
   $('.lists').prepend(newCard)
 
 }
