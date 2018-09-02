@@ -1,0 +1,23 @@
+* {
+  text-align: center;
+  font-size: 16px;
+}
+
+header {
+  background-color: #E5F3F2;
+  font-family: 'Roboto Slab', serif;
+  font-weight: bold;
+
+}
+
+h1 {
+  color: #00A79D;
+}
+
+h1 span {
+  color: #6D6E71;
+}
+
+main {
+  font-family: 'Open Sans', sans-serif;
+}
