@@ -1,13 +1,12 @@
 * {
-  text-align: center;
+  font-family: 'Roboto Slab', serif;
   font-size: 16px;
+  font-weight: bold;
+  text-align: center;
 }
 
 header {
   background-color: #E5F3F2;
-  font-family: 'Roboto Slab', serif;
-  font-weight: bold;
-
 }
 
 h1 {
@@ -19,5 +18,45 @@ h1 span {
 }
 
 main {
+}
+
+.new-card {
+  text-align: left;
+  width: 50%;
+}
+
+.new-card p {
   font-family: 'Open Sans', sans-serif;
+}
+
+.new-card button {
+  height: 20px;
+  width: 20px;
+  border: none;
+}
+
+.delete-button {
+  background-image: url("images/delete.svg");
+
+}
+
+.upvote-button {
+  background-image: url("images/upvote.svg");
+}
+
+.downvote-button {
+  background-image: url("images/downvote.svg");
+
+}
+
+.delete-button:hover {
+  background-image: url("images/delete-hover.svg")
+}
+
+.upvote-button:hover {
+  background-image: url("images/upvote-hover.svg")
+}
+
+.downvote-button:hover {
+  background-image: url("images/downvote-hover.svg")
 }
