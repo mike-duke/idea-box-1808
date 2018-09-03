@@ -2,31 +2,94 @@
   font-family: 'Roboto Slab', serif;
   font-size: 16px;
   font-weight: bold;
+  margin: 0;
+  padding 0;
   text-align: center;
 }
 
 header {
   background-color: #E5F3F2;
+  height: 45vh;
 }
 
 h1 {
   color: #00A79D;
+  font-size: 5rem;
+  margin-bottom: 4vh;
 }
+
 
 h1 span {
   color: #6D6E71;
+  font-size: 5rem;
+}
+
+.user-input {
+ text-align: center;
+
+}
+.input-title, .input-body, .input-submit {
+  display: block;
+  margin: auto;
+}
+
+.input-title, .input-body {
+  height: 4vh;
+  opacity: .7;
+  width: 50vw;
+}
+
+.input-title {
+  margin-bottom: 5vh;
+}
+
+.input-body {
+  margin-bottom: 5vh;
+}
+
+.input-submit {
+  background-color: #00A79D;
+  color: white;
+  border: 1px;
+  height: 5vh;
+  width: 50.3vw;
+}
+
+::placeholder {
+text-align: left;
 }
 
 main {
 }
 
+.input-search {
+  border: solid 2px;
+  height: 5vh;
+  margin-top: 5vh;
+  opacity: .7;
+  width: 50.3vw;
+}
+
+
 .new-card {
+  margin: auto;
+  margin-top: 5vh;
   text-align: left;
   width: 50%;
 }
 
+.new-card h2 {
+  color: #6D6E71;
+  display: inline;
+  font-size: 23px;
+}
+
 .new-card p {
+  color: #939598;
   font-family: 'Open Sans', sans-serif;
+  margin-bottom:7%;
+  margin-top: 2%;
+  text-align: left;
 }
 
 .new-card button {
@@ -37,7 +100,8 @@ main {
 
 .delete-button {
   background-image: url("images/delete.svg");
-
+  float: right;
+  margin-top: 9px;
 }
 
 .upvote-button {
@@ -46,6 +110,7 @@ main {
 
 .downvote-button {
   background-image: url("images/downvote.svg");
+  margin-left: 4%;
 
 }
 
@@ -59,4 +124,15 @@ main {
 
 .downvote-button:hover {
   background-image: url("images/downvote-hover.svg")
+}
+
+.new-card h4 {
+  color: #6D6E71;
+  display: inline;
+  margin-left: 4%;
+}
+
+.new-card hr {
+  background-color: #D1D3D4;
+  margin-top: 5%;
 }
