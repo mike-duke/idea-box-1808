@@ -1,5 +1,7 @@
+// get all ideas from localStorage and add them to the DOM
 getAllIdeas();
 
+// set cursor on title input field
 $('.input-title').focus();
 
 // event listeners
@@ -17,7 +19,6 @@ $('.input-submit').on('click', function(){
 })
 
 $('.lists').on('click', function(event) {
-  console.log($(event.target))
   var card = getCard(event);
 })
 
