@@ -81,8 +81,8 @@ function clearInputs() {
 function deleteCard(event) {
   var cardId = $(event.target).siblings('#storage-id').attr('class');
   if (event.target.classList.contains('delete-button')) {
-    event.target.parentNode.remove()
-    JSON.parse(localStorage.removeItem(cardId));
+    event.target.parentNode.remove();
+    localStorage.removeItem(cardId);
   }
 };
 
@@ -124,11 +124,14 @@ function downvote(event) {
 
 function editIdea(event) {
   var card = getCard(event);
+  console.log('1', card);
   if (event.target.classList.contains('card-title')) {
-    card.title = $('.card-title').text();
+    console.log('2', card)
+    card.title = $(event.target).text();
+    console.log('3',card.title)
     localStorage.setItem(card.storageId, JSON.stringify(card));
   } else if (event.target.classList.contains('card-body')) {
-    card.body = $('.card-body').text();
+    card.body = $(event.target).text();
     localStorage.setItem(card.storageId, JSON.stringify(card));
   }
 }
