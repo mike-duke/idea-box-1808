@@ -6,6 +6,22 @@ getAllIdeas();
 // set cursor on title input field
 $('.input-title').focus();
 
+$('.input-title').on('keyup', function(event) {
+  if ($('.input-title').val() !== '' && $('.input-body').val() !== '') {
+    enableSaveButton();
+  }
+
+  if (event.keyCode === 13) {
+
+  }
+})
+
+$('.input-body').on('keydown', function() {
+  if ($('.input-title').val() !== '' && $('.input-body').val() !== '') {
+    enableSaveButton();
+  }
+})
+
 // event listeners
 $('.lists').on('click', function(event) {
   deleteCard(event);
@@ -18,7 +34,7 @@ $('.input-submit').on('click', function(){
   var idea = new Idea($('.input-title').val(), $('.input-body').val());
   addCard(idea);
   clearInputs();
-})
+});
 
 $('.lists').on('input', function(event) {
   editIdea(event);
@@ -28,7 +44,7 @@ $('.lists').on('keydown', function(event) {
   if (event.keyCode === 13) {
     event.target.blur();
   }
-})
+});
 
 // constructor function
 function Idea(title, body) {
@@ -36,7 +52,7 @@ function Idea(title, body) {
   this.body = body;
   this.quality = 0;
   this.storageId = Date.now();
-};
+}
       
 // function to create card on DOM and store card in localStorage
 function addCard(idea) {
@@ -54,8 +70,14 @@ function addCard(idea) {
 
   $('.lists').prepend(newCard);
   storeIdea(idea);
-};
+}
       
+function enableSaveButton() {
+  $('.input-submit').removeAttr('disabled');
+}
+
+function checkInputs() {}
+
 // function to grab all of the ideas in localStorage
 function getAllIdeas() {
   var localArray = Object.keys(localStorage);
@@ -72,8 +94,11 @@ function storeIdea(idea) {
 
 // function to get the card from localStorage
 function getIdea(event) {
+  console.log('event target', $(event.target).siblings())
   var cardId = $(event.target).siblings('#storage-id').attr('class');
+  console.log('card ID', cardId)
   var retrievedCard = JSON.parse(localStorage.getItem(cardId));
+  console.log('retrieved card', retrievedCard);
   return retrievedCard;
 }
 
@@ -82,20 +107,23 @@ function clearInputs() {
   $('.input-title').val('');
   $('.input-body').val('');
   $('.input-title').focus();
-};
+  $('.input-submit').attr('disabled');
+}
 
 // function to run the delete button on the card
 function deleteCard(event) {
   var cardId = $(event.target).siblings('#storage-id').attr('class');
   if (event.target.classList.contains('delete-button')) {
-    event.target.parentNode.remove();
     localStorage.removeItem(cardId);
+    event.target.parentNode.remove();
   }
-};
+}
 
 // function to run the upvote button
 function upvote(event) {
+  console.log('event', event)
   var retrievedIdea = getIdea(event);
+  console.log('idea', retrievedIdea)
   var upvoteTarget = event.target.classList.contains('upvote-button');
 
   if (retrievedIdea.quality === 2) {
@@ -113,7 +141,7 @@ function upvote(event) {
   }
   var stringifiedIdea = JSON.stringify(retrievedIdea);
   localStorage.setItem(retrievedIdea.storageId, stringifiedIdea);
-};
+}
 
 // function to run the downvote button
 function downvote(event) {
@@ -135,7 +163,7 @@ function downvote(event) {
   }
   var stringifiedIdea = JSON.stringify(retrievedIdea);
   localStorage.setItem(retrievedIdea.storageId, stringifiedIdea);
-};
+}
 
 //function to allow card edits to store to localStorage
 function editIdea(event) {
