@@ -1,4 +1,5 @@
 // get all ideas from localStorage and add them to the DOM
+var qualityArray = ['swill', 'plausible', 'genius'];
 getAllIdeas();
 
 // set cursor on title input field
@@ -32,7 +33,7 @@ $('.lists').on('keydown', function(event) {
 function Idea (title, body) {
   this.title = title;
   this.body = body;
-  this.quality ='swill'
+  this.quality = 0;
   this.storageId = Date.now();
 };
       
@@ -46,7 +47,7 @@ function addCard(idea) {
   <p id="storage-id" class="${idea.storageId}" hidden></p>
   <button class="upvote-button"></button>
   <button class="downvote-button"></button>
-  <h4 class="card-quality">Quality: ${idea.quality}</h4>
+  <h4 class="card-quality">Quality: ${qualityArray[idea.quality]}</h4>
   <hr>`
 
   $('.lists').prepend(newCard);
@@ -92,38 +93,46 @@ function deleteCard(event) {
 
 // function to run the upvote button
 function upvote(event) {
-  var retrievedCard = getIdea(event);
+  var retrievedIdea = getIdea(event);
   var upvoteTarget = event.target.classList.contains('upvote-button');
-  if (upvoteTarget && retrievedCard.quality === 'swill') {
-    retrievedCard.quality = 'plausible';
-    var stringifiedCard = JSON.stringify(retrievedCard);
-    $(event.target).siblings('.card-quality').text('Quality: plausible');
-  } else if (upvoteTarget && retrievedCard.quality === 'plausible') {
-    retrievedCard.quality = 'genius';
-    var stringifiedCard = JSON.stringify(retrievedCard);
-    $(event.target).siblings('.card-quality').text('Quality: genius');
+
+  if (retrievedIdea.quality === 2) {
+    return
+  }
+  
+  if (upvoteTarget && retrievedIdea.quality === 0) {
+    retrievedIdea.quality++;
+    $(event.target).siblings('.card-quality').text(`Quality: ${qualityArray[retrievedIdea.quality]}`);
+  } else if (upvoteTarget && retrievedIdea.quality === 1) {
+    retrievedIdea.quality++;
+    $(event.target).siblings('.card-quality').text(`Quality: ${qualityArray[retrievedIdea.quality]}`);
   } else {
     return; 
   }
-  localStorage.setItem(retrievedCard.storageId, stringifiedCard);
+  var stringifiedIdea = JSON.stringify(retrievedIdea);
+  localStorage.setItem(retrievedIdea.storageId, stringifiedIdea);
 };
 
 // function to run the downvote button
 function downvote(event) {
-  var retrievedCard = getIdea(event);
+  var retrievedIdea = getIdea(event);
   var downvoteTarget = event.target.classList.contains('downvote-button');
-  if (downvoteTarget && retrievedCard.quality === 'genius') {
-    retrievedCard.quality = 'plausible';
-    var stringifiedCard = JSON.stringify(retrievedCard);
-    $(event.target).siblings('.card-quality').text('Quality: plausible');
-  } else if (downvoteTarget && retrievedCard.quality === 'plausible') {
-    retrievedCard.quality = 'swill';
-    var stringifiedCard = JSON.stringify(retrievedCard);
-    $(event.target).siblings('.card-quality').text('Quality: swill');
+
+  if (retrievedIdea.quality === 0) {
+    return
+  }
+  
+  if (downvoteTarget && retrievedIdea.quality === 2) {
+    retrievedIdea.quality--;
+    $(event.target).siblings('.card-quality').text(`Quality: ${qualityArray[retrievedIdea.quality]}`);
+  } else if (downvoteTarget && retrievedIdea.quality === 1) {
+    retrievedIdea.quality--;
+    $(event.target).siblings('.card-quality').text(`Quality: ${qualityArray[retrievedIdea.quality]}`);
   } else {
     return; 
   }
-  localStorage.setItem(retrievedCard.storageId, stringifiedCard);
+  var stringifiedIdea = JSON.stringify(retrievedIdea);
+  localStorage.setItem(retrievedIdea.storageId, stringifiedIdea);
 };
 
 //function to allow card edits to store to localStorage
