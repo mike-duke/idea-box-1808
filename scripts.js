@@ -18,8 +18,14 @@ $('.input-submit').on('click', function(){
   clearInputs()
 })
 
-$('.lists').on('click', function(event) {
-  var card = getCard(event);
+$('.lists').on('input', function(event) {
+  editIdea(event);
+});
+
+$('.lists').on('keydown', function(event) {
+  if (event.keyCode === 13) {
+    event.target.blur()
+  }
 })
 
 // constructor function
@@ -36,9 +42,9 @@ function addCard(card) {
   var stringId = card.storageId.toString();
   var newCard = `
   <article class="new-card">
-  <h2 contenteditable="true">${card.title}</h2>
+  <h2 class="card-title" contenteditable="true">${card.title}</h2>
   <button class="delete-button"></button>
-  <p contenteditable="true">${card.body}</p>
+  <p class="card-body" contenteditable="true">${card.body}</p>
   <p id="storage-id" class="${card.storageId}" hidden></p>
   <button class="upvote-button"></button>
   <button class="downvote-button"></button>
@@ -115,3 +121,14 @@ function downvote(event) {
   }
   localStorage.setItem(retrievedCard.storageId, stringifiedCard);
 };
+
+function editIdea(event) {
+  var card = getCard(event);
+  if (event.target.classList.contains('card-title')) {
+    card.title = $('.card-title').text();
+    localStorage.setItem(card.storageId, JSON.stringify(card));
+  } else if (event.target.classList.contains('card-body')) {
+    card.body = $('.card-body').text();
+    localStorage.setItem(card.storageId, JSON.stringify(card));
+  }
+}
