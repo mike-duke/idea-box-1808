@@ -129,11 +129,12 @@ function downvote(event) {
 //function to allow card edits to store to localStorage
 function editIdea(event) {
   var idea = getIdea(event);
+  var textToChange;
   if (event.target.classList.contains('card-title')) {
-    idea.title = $(event.target).text();
-    localStorage.setItem(idea.storageId, JSON.stringify(card));
+    textToChange = 'title';
   } else if (event.target.classList.contains('card-body')) {
-    idea.body = $(event.target).text();
-    localStorage.setItem(idea.storageId, JSON.stringify(card));
+    textToChange = 'body';
   }
+  idea[textToChange] = $(event.target).text();
+  localStorage.setItem(idea.storageId, JSON.stringify(idea));
 }
