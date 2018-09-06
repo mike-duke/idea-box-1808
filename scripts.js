@@ -122,13 +122,11 @@ function downvote(event) {
   localStorage.setItem(retrievedCard.storageId, stringifiedCard);
 };
 
+//function to allow card edits to store to localStorage
 function editIdea(event) {
   var card = getCard(event);
-  console.log('1', card);
   if (event.target.classList.contains('card-title')) {
-    console.log('2', card)
     card.title = $(event.target).text();
-    console.log('3',card.title)
     localStorage.setItem(card.storageId, JSON.stringify(card));
   } else if (event.target.classList.contains('card-body')) {
     card.body = $(event.target).text();
