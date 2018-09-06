@@ -13,8 +13,8 @@ $('.lists').on('click', function(event) {
 
 $('.input-submit').on('click', function(){
   event.preventDefault()
-  var card = new Card($('.input-title').val(), $('.input-body').val())
-  addCard(card);
+  var idea = new Idea($('.input-title').val(), $('.input-body').val())
+  addCard(idea);
   clearInputs()
 })
 
@@ -29,7 +29,7 @@ $('.lists').on('keydown', function(event) {
 })
 
 // constructor function
-function Card (title, body) {
+function Idea (title, body) {
   this.title = title;
   this.body = body;
   this.quality ='swill'
@@ -37,22 +37,20 @@ function Card (title, body) {
 };
       
 // function to create card on DOM and store card in localStorage
-function addCard(card) {
-  var stringifiedCard = JSON.stringify(card);
-  var stringId = card.storageId.toString();
+function addCard(idea) {
   var newCard = `
   <article class="new-card">
-  <h2 class="card-title" contenteditable="true">${card.title}</h2>
+  <h2 class="card-title" contenteditable="true">${idea.title}</h2>
   <button class="delete-button"></button>
-  <p class="card-body" contenteditable="true">${card.body}</p>
-  <p id="storage-id" class="${card.storageId}" hidden></p>
+  <p class="card-body" contenteditable="true">${idea.body}</p>
+  <p id="storage-id" class="${idea.storageId}" hidden></p>
   <button class="upvote-button"></button>
   <button class="downvote-button"></button>
-  <h4 class="card-quality">Quality: ${card.quality}</h4>
+  <h4 class="card-quality">Quality: ${idea.quality}</h4>
   <hr>`
 
-  localStorage.setItem(card.storageId, stringifiedCard)
-  $('.lists').prepend(newCard)
+  $('.lists').prepend(newCard);
+  storeIdea(idea);
 };
       
 // function to grab all of the ideas in localStorage
@@ -63,8 +61,14 @@ function getAllIdeas() {
   }
 }
 
+function storeIdea(idea) {
+  var stringifiedIdea = JSON.stringify(idea);
+  var stringId = idea.storageId.toString();
+  localStorage.setItem(idea.storageId, stringifiedIdea)
+}
+
 // function to get the card from localStorage
-function getCard(event) {
+function getIdea(event) {
   var cardId = $(event.target).siblings('#storage-id').attr('class');
   var retrievedCard = JSON.parse(localStorage.getItem(cardId));
   return retrievedCard;
@@ -88,7 +92,7 @@ function deleteCard(event) {
 
 // function to run the upvote button
 function upvote(event) {
-  var retrievedCard = getCard(event);
+  var retrievedCard = getIdea(event);
   var upvoteTarget = event.target.classList.contains('upvote-button');
   if (upvoteTarget && retrievedCard.quality === 'swill') {
     retrievedCard.quality = 'plausible';
@@ -106,7 +110,7 @@ function upvote(event) {
 
 // function to run the downvote button
 function downvote(event) {
-  var retrievedCard = getCard(event);
+  var retrievedCard = getIdea(event);
   var downvoteTarget = event.target.classList.contains('downvote-button');
   if (downvoteTarget && retrievedCard.quality === 'genius') {
     retrievedCard.quality = 'plausible';
@@ -124,12 +128,12 @@ function downvote(event) {
 
 //function to allow card edits to store to localStorage
 function editIdea(event) {
-  var card = getCard(event);
+  var idea = getIdea(event);
   if (event.target.classList.contains('card-title')) {
-    card.title = $(event.target).text();
-    localStorage.setItem(card.storageId, JSON.stringify(card));
+    idea.title = $(event.target).text();
+    localStorage.setItem(idea.storageId, JSON.stringify(card));
   } else if (event.target.classList.contains('card-body')) {
-    card.body = $(event.target).text();
-    localStorage.setItem(card.storageId, JSON.stringify(card));
+    idea.body = $(event.target).text();
+    localStorage.setItem(idea.storageId, JSON.stringify(card));
   }
 }
