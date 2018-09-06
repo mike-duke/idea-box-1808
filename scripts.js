@@ -1,5 +1,6 @@
-// get all ideas from localStorage and add them to the DOM
 var qualityArray = ['swill', 'plausible', 'genius'];
+
+// get all ideas from localStorage and add them to the DOM
 getAllIdeas();
 
 // set cursor on title input field
@@ -13,10 +14,10 @@ $('.lists').on('click', function(event) {
 });
 
 $('.input-submit').on('click', function(){
-  event.preventDefault()
-  var idea = new Idea($('.input-title').val(), $('.input-body').val())
+  event.preventDefault();
+  var idea = new Idea($('.input-title').val(), $('.input-body').val());
   addCard(idea);
-  clearInputs()
+  clearInputs();
 })
 
 $('.lists').on('input', function(event) {
@@ -25,12 +26,12 @@ $('.lists').on('input', function(event) {
 
 $('.lists').on('keydown', function(event) {
   if (event.keyCode === 13) {
-    event.target.blur()
+    event.target.blur();
   }
 })
 
 // constructor function
-function Idea (title, body) {
+function Idea(title, body) {
   this.title = title;
   this.body = body;
   this.quality = 0;
@@ -48,7 +49,8 @@ function addCard(idea) {
   <button class="upvote-button"></button>
   <button class="downvote-button"></button>
   <h4 class="card-quality">Quality: ${qualityArray[idea.quality]}</h4>
-  <hr>`
+  <hr>
+  `;
 
   $('.lists').prepend(newCard);
   storeIdea(idea);
@@ -77,9 +79,9 @@ function getIdea(event) {
 
 // function to clear inputs and ready the cursor
 function clearInputs() {
-  $('.input-title').val('')
-  $('.input-body').val('')
-  $('.input-title').focus()
+  $('.input-title').val('');
+  $('.input-body').val('');
+  $('.input-title').focus();
 };
 
 // function to run the delete button on the card
@@ -97,7 +99,7 @@ function upvote(event) {
   var upvoteTarget = event.target.classList.contains('upvote-button');
 
   if (retrievedIdea.quality === 2) {
-    return
+    return;
   }
   
   if (upvoteTarget && retrievedIdea.quality === 0) {
@@ -119,7 +121,7 @@ function downvote(event) {
   var downvoteTarget = event.target.classList.contains('downvote-button');
 
   if (retrievedIdea.quality === 0) {
-    return
+    return;
   }
   
   if (downvoteTarget && retrievedIdea.quality === 2) {
