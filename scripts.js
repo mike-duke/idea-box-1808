@@ -10,24 +10,7 @@ $('.input-title').on('keyup', function(event) {
   if ($('.input-title').val() !== '' && $('.input-body').val() !== '') {
     enableSaveButton();
   }
-
-  if (event.keyCode === 13) {
-
-  }
 })
-
-$('.input-body').on('keydown', function() {
-  if ($('.input-title').val() !== '' && $('.input-body').val() !== '') {
-    enableSaveButton();
-  }
-})
-
-// event listeners
-$('.lists').on('click', function(event) {
-  deleteCard(event);
-  upvote(event);
-  downvote(event);
-});
 
 $('.input-submit').on('click', function(){
   event.preventDefault();
@@ -35,6 +18,19 @@ $('.input-submit').on('click', function(){
   addCard(idea);
   clearInputs();
 });
+
+$('.input-body').on('keydown', function() {
+  if ($('.input-title').val() !== '' && $('.input-body').val() !== '') {
+    enableSaveButton();
+  }
+})
+
+$('.lists').on('click', function(event) {
+  deleteCard(event);
+  upvote(event);
+  downvote(event);
+});
+
 
 $('.lists').on('input', function(event) {
   editIdea(event);
@@ -45,6 +41,10 @@ $('.lists').on('keydown', function(event) {
     event.target.blur();
   }
 });
+
+$('.input-search').on('keyup', function(event) {
+  searchIdeas(event);
+})
 
 // constructor function
 function Idea(title, body) {
@@ -58,15 +58,15 @@ function Idea(title, body) {
 function addCard(idea) {
   var newCard = `
   <article class="new-card">
-  <h2 class="card-title" contenteditable="true">${idea.title}</h2>
-  <button class="delete-button"></button>
-  <p class="card-body" contenteditable="true">${idea.body}</p>
-  <p id="storage-id" class="${idea.storageId}" hidden></p>
-  <button class="upvote-button"></button>
-  <button class="downvote-button"></button>
-  <h4 class="card-quality">Quality: ${qualityArray[idea.quality]}</h4>
-  <hr>
-  `;
+    <h2 class="card-title" contenteditable="true">${idea.title}</h2>
+    <button class="delete-button"></button>
+    <p class="card-body" contenteditable="true">${idea.body}</p>
+    <p id="storage-id" class="${idea.storageId}" hidden></p>
+    <button class="upvote-button"></button>
+    <button class="downvote-button"></button>
+    <h4 class="card-quality">Quality: ${qualityArray[idea.quality]}</h4>
+    <hr>
+  </article>`;
 
   $('.lists').prepend(newCard);
   storeIdea(idea);
@@ -176,4 +176,12 @@ function editIdea(event) {
   }
   idea[textToChange] = $(event.target).text();
   localStorage.setItem(idea.storageId, JSON.stringify(idea));
+}
+
+function searchIdeas(event) {
+  $('.new-card').map(function() {
+    var trueTitle = $(this).children('.card-title').text().includes($('.input-search').val());
+    var trueBody = $(this).children('.card-body').text().includes($('.input-search').val()); 
+    $(this).toggle(trueTitle || trueBody);
+  })
 }
