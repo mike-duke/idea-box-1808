@@ -27,3 +27,24 @@ function filterTitle(array) {
     }
   }
 }
+
+// Sure, here's the function that runs, hopefully helpful without context..
+// function filterResults(event) {
+//   var searchInput = $('.search-input').val().toLowerCase();
+//   var ideaArray = $('.idea-card');
+//   for (var i = 0; i < ideaArray.length; i++) {
+//     if ($(ideaArray[i].children[0]).text().toLowerCase().indexOf(searchInput) === -1 && 
+          // $(ideaArray[i].children[2]).text().toLowerCase().indexOf(searchInput) === -1) {
+//       $(ideaArray[i]).slideUp();
+//     } else {
+//       $(ideaArray[i]).slideDown();
+//     }
+//   }
+// }
+
+for (i = 0; i < cardArray.length; i++) {
+  if ($(cardArray[i]).children('.card-title').text().includes($('.input-search').val()) === false) {
+    console.log('yes');
+    $(cardArray[i]).attr('hidden');
+  }
+}
